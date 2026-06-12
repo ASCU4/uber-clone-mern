@@ -140,51 +140,51 @@ UBER-Clone/
 
 ### 1️⃣ Landing Page
 
-![Landing Page](image_url)
+![Landing Page](https://github.com/ASCU4/uber-clone-mern/blob/a14c0d490242c9e11cdc37b9d1115f5bd90158f8/screenshots/Screenshot%20(368).png)
 
 ### 2️⃣ User Registration
 
-![User Registration](image_url)
+![User Registration](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(369).png?raw=true)
 
 ### 3️⃣ Captain Registration
 
-![Captain Registration](image_url)
+![Captain Registration](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(371).png?raw=true)
 
 ### 4️⃣ Find a Trip
 
-![Find a Trip](image_url)
+![Find a Trip](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(372).png?raw=true)
 
 ### 5️⃣ Location Search Panel
 
-![Location Search](image_url)
+![Location Search](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(373).png?raw=true)
 
 ### 6️⃣ Vehicle Selection
 
-![Vehicle Selection](image_url)
+![Vehicle Selection](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(374).png?raw=true)
 
 ### 7️⃣ Ride Confirmation
 
-![Ride Confirmation](image_url)
+![Ride Confirmation](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(375).png?raw=true)
 
 ### 8️⃣ Waiting For Rider
 
-![Waiting For Rider](image_url)
+![Waiting For Rider](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(376).png?raw=true)
 
 ### 9️⃣ Captain Assigned
 
-![Captain Assigned](image_url)
+![Captain Assigned](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(377).png?raw=true)
 
 ### 🔟 Captain Dashboard
 
-![Captain Dashboard](image_url)
+![Captain Dashboard](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(378).png?raw=true)
 
 ### 1️⃣1️⃣ New Ride Request
 
-![New Ride Request](image_url)
+![New Ride Request](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(379).png?raw=true)
 
 ### 1️⃣2️⃣ OTP Verification
 
-![OTP Verification](image_url)
+![OTP Verification](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(380).png?raw=true)
 
 ### 1️⃣3️⃣ Live Tracking
 
@@ -192,15 +192,15 @@ UBER-Clone/
 
 ### 1️⃣4️⃣ Finish Ride
 
-![Finish Ride](image_url)
+![Finish Ride](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(381).png?raw=true)
 
 ### 1️⃣5️⃣ Ride Completion Success
 
-![Ride Completion Success](image_url)
+![Ride Completion Success](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(382).png?raw=true)
 
 ### 1️⃣6️⃣ Ride Completed Screen
 
-![Ride Completed](image_url)
+![Ride Completed](https://github.com/ASCU4/uber-clone-mern/blob/main/screenshots/Screenshot%20(384).png?raw=true)
 
 ---
 
