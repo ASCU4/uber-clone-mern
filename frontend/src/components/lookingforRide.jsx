@@ -30,7 +30,7 @@ const lookingForRide = (props) => {
                     <div className='flex items-center gap-3 p-3 border-b-2'>
                         <i className="ri-map-pin-user-fill"></i>
                         <div>
-                            <h3 className='text-lg font-medium'>565/12-D</h3>
+                            <h3 className='text-lg font-medium'>562/11-A</h3>
                             <p className='text-sm text-gray-600 font-medium'>Hamirpur, Himachal Pradesh 177001</p>
                         </div>
                     </div>
@@ -46,7 +46,7 @@ const lookingForRide = (props) => {
                     <div className='flex items-center gap-3 p-3 border-b-2'>
                         <i className="ri-currency-line"></i>
                         <div>
-                            <h3 className='text-lg font-medium'>{selectedVehicle.fare}</h3>
+                            <h3 className='text-lg font-medium'>{props.selectedVehicle.fare}</h3>
                             <p className='text-sm text-gray-600 font-medium'>Cash/Online</p>
                         </div>
                     </div>

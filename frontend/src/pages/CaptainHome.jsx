@@ -7,8 +7,9 @@ import RidePopUp from '../components/RidePopUp.jsx'
 import ConfirmRidePopUp from '../components/ConfirmRidePopUp.jsx'
 
 const CaptainHome = () => {
-  const [ridePopupPanel, setRidePopupPanel] = useState(true)
+  const [ridePopupPanel, setRidePopupPanel] = useState(false)
   const [confirmRidePopupPanel, setConfirmRidePopupPanel] = useState(false)
+  const [noRideMessage, setNoRideMessage] = useState(false)
   const ridePopupPanelRef = useRef(null)
   const confirmRidePopupPanelRef = useRef(null)
 
@@ -27,6 +28,7 @@ const CaptainHome = () => {
   }, [confirmRidePopupPanel])
 
   const openConfirmRidePopup = () => {
+    sessionStorage.removeItem('rideOtpVerified')
     setRidePopupPanel(false)
     setConfirmRidePopupPanel(true)
   }
@@ -34,6 +36,18 @@ const CaptainHome = () => {
   const returnToRidePopup = () => {
     setConfirmRidePopupPanel(false)
     setRidePopupPanel(true)
+  }
+
+  const handleGoOnline = () => {
+    const rideOtp = localStorage.getItem('rideOtp')
+    if (rideOtp) {
+      setRidePopupPanel(true)
+    } else {
+      setNoRideMessage(true)
+      setTimeout(() => {
+        setNoRideMessage(false)
+      }, 3000)
+    }
   }
 
   return (
@@ -52,6 +66,12 @@ const CaptainHome = () => {
         <i className='ri-home-5-line'></i>
       </Link>
 
+      {noRideMessage && (
+        <div className='absolute top-20 left-1/2 z-50 -translate-x-1/2 rounded-full bg-black/80 px-4 py-2 text-sm font-medium text-white shadow-lg transition-all duration-300'>
+          No ride available
+        </div>
+      )}
+
       <div className='h-[55%] w-full'>
         <img
           className='h-full w-full object-cover'
@@ -60,7 +80,7 @@ const CaptainHome = () => {
         />
       </div>
       <div className='h-[45%] w-full'>
-        <CaptainDetails />
+        <CaptainDetails goOnline={handleGoOnline} />
       </div>
       <div
         ref={ridePopupPanelRef}
@@ -74,7 +94,7 @@ const CaptainHome = () => {
 
       <div
         ref={confirmRidePopupPanelRef}
-        className='fixed bottom-0 z-40 w-full translate-y-full bg-white px-3 py-8'
+        className='fixed inset-x-0 bottom-0 z-40 max-h-[95vh] translate-y-full overflow-y-auto bg-transparent'
       >
         <ConfirmRidePopUp
           setConfirmRidePopupPanel={setConfirmRidePopupPanel}

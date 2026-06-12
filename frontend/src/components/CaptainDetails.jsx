@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CaptainDetails = () => {
+const CaptainDetails = (props) => {
     return (
         <div>
           <div className='absolute bottom-0 left-0 right-0 rounded-t-3xl bg-white px-4 pb-6 pt-5 shadow-[0_-8px_24px_rgba(0,0,0,0.12)]'>
@@ -43,7 +43,7 @@ const CaptainDetails = () => {
           </div>
         </div>
 
-        <button className='mt-5 w-full rounded-lg bg-black p-3 font-semibold text-white'>
+        <button onClick={props.goOnline} className='mt-5 w-full rounded-lg bg-black p-3 font-semibold text-white'>
           Go Online
         </button>
       </div>

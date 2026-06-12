@@ -26,7 +26,7 @@ const Home =() => {
     const [selectedVehicle, setSelectedVehicle] = useState({
         name: 'UberGo',
         image: '/cabimage.webp',
-        fare: 'Rs. 157.21'
+        fare: '₹157.21'
     })
     // ka kam aata hai jise hum manipulate karna chahte hai 
     // yaha hum pannel ko manipulate karna chahte hai to uske liye useRef ka use kiya hai
@@ -35,9 +35,24 @@ const Home =() => {
         e.preventDefault()
     }
 
-    const createRideOtp = () => {
+    const createRideOtp = (vehicle) => {
         const otp = String(Math.floor(1000 + Math.random() * 9000))
+        const activeRide = {
+            vehicle,
+            pickup: {
+                title: '562/11-A',
+                address: 'Hamirpur, Himachal Pradesh 177001'
+            },
+            destination: {
+                title: '555/12-D',
+                address: 'Dharamshala, Himachal Pradesh 177008'
+            },
+            distance: '4.2 KM',
+            paymentMethod: 'Cash Cash'
+        }
+
         localStorage.setItem('rideOtp', otp)
+        localStorage.setItem('activeRide', JSON.stringify(activeRide))
         setRideOtp(otp)
     }
      //gsap calling function

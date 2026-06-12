@@ -14,7 +14,7 @@ const ConfirmRide = (props) => {
     }
 
     const confirmRide = () => {
-        props.createRideOtp()
+        props.createRideOtp(selectedVehicle)
         props.setConfirmRidePanel(false)
         props.setLookingForRidePanel(true)
     }
@@ -39,7 +39,7 @@ const ConfirmRide = (props) => {
                     <div className='flex items-center gap-3 p-3 border-b-2'>
                         <i className="ri-map-pin-user-fill"></i>
                         <div>
-                            <h3 className='text-lg font-medium'>565/12-D</h3>
+                            <h3 className='text-lg font-medium'>562/11-A</h3>
                             <p className='text-sm text-gray-600 font-medium'>Hamirpur, Himachal Pradesh 177001</p>
                         </div>
                     </div>
@@ -55,8 +55,8 @@ const ConfirmRide = (props) => {
                     <div className='flex items-center gap-3 p-3 border-b-2'>
                         <i className="ri-currency-line"></i>
                         <div>
-                            <h3 className='text-lg font-medium'>{selectedVehicle.fare}</h3>
-                            <p className='text-sm text-gray-600 font-medium'>Cash/Online</p>
+                           <h3 className='text-lg font-medium'>{selectedVehicle.fare}</h3>
+                          <p className='text-sm text-gray-600 font-medium'>Cash/Online</p>
                         </div>
                     </div>
 
@@ -70,7 +70,7 @@ const ConfirmRide = (props) => {
                         onClick={goBackToFindTrip}
                         className='w-full bg-red-600 text-white font-semibold p-2 mt-3'
                     >
-                        Go Back
+                        Ignore
                     </button>
                 </div>
             </div>

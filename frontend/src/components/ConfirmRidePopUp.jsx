@@ -1,14 +1,58 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const ConfirmRidePopUp = ({
   setConfirmRidePopupPanel,
   returnToRidePopup,
 }) => {
+  const navigate = useNavigate()
   const [enteredOtp, setEnteredOtp] = useState('')
   const [verificationStatus, setVerificationStatus] = useState('')
+  const storedRide = localStorage.getItem('activeRide')
+  let activeRide = null
+
+  try {
+    activeRide = storedRide ? JSON.parse(storedRide) : null
+  } catch {
+    activeRide = null
+  }
+
+  const rideDetails = (() => {
+    const base =
+      activeRide && activeRide.pickup
+        ? activeRide
+        : {
+            pickup: {
+              title: '562/11-A',
+              address: 'Hamirpur, Himachal Pradesh 177001',
+            },
+            destination: {
+              title: '555/12-D',
+              address: 'Dharamshala, Himachal Pradesh 177008',
+            },
+            distance: '4.2 KM',
+            vehicle: {
+              fare: 'Rs. 157.21',
+            },
+            paymentMethod: 'Cash/Online',
+          }
+
+    return {
+      ...base,
+      // normalize fields expected by UI
+      user: base.user, // may be undefined if your activeRide doesn't include it
+      fare: base.fare ?? base.vehicle?.fare,
+      _id: base._id,
+    }
+  })()
 
   const verifyOtp = (event) => {
     event.preventDefault()
+
+    if (enteredOtp.length !== 4) {
+      setVerificationStatus('incomplete')
+      return
+    }
 
     const rideOtp = localStorage.getItem('rideOtp')
 
@@ -17,84 +61,168 @@ const ConfirmRidePopUp = ({
       return
     }
 
-    if (enteredOtp === rideOtp) {
-      setVerificationStatus('success')
-      localStorage.removeItem('rideOtp')
-      setTimeout(() => {
-        returnToRidePopup()
-      }, 400)
+    if (enteredOtp !== rideOtp) {
+      setVerificationStatus('error')
       return
     }
 
-    setVerificationStatus('error')
+    sessionStorage.setItem('rideOtpVerified', 'true')
+    localStorage.removeItem('rideOtp')
+    setVerificationStatus('success')
+    console.log('[OTP verified] rideDetails to navigate:', rideDetails)
+    navigate('/captain-riding', { state: { ride: rideDetails } })
   }
 
+  const handleOtpChange = (event) => {
+    setEnteredOtp(event.target.value.replace(/\D/g, '').slice(0, 4))
+    setVerificationStatus('')
+  }
+
+  const statusMessages = {
+    incomplete: 'Enter the complete 4-digit OTP to start the ride.',
+    error: 'That OTP is incorrect. Check the number with the rider.',
+    missing: 'No active ride OTP was found. Return and accept a ride first.',
+    success: 'OTP verified. Starting the ride...',
+  }
+
+  const hasError = ['incomplete', 'error', 'missing'].includes(
+    verificationStatus,
+  )
+
   return (
-    <div>
+    <section className='mx-auto w-full max-w-lg rounded-t-3xl bg-white px-5 pb-6 pt-3 shadow-2xl'>
       <button
         type='button'
         onClick={() => setConfirmRidePopupPanel(false)}
-        className='absolute top-1 w-[93%] p-1 text-center'
+        className='mx-auto flex h-8 w-16 items-center justify-center text-gray-400 transition hover:text-gray-700'
         aria-label='Close confirmation panel'
       >
-        <i className='ri-arrow-down-wide-line text-3xl text-gray-300'></i>
+        <span className='h-1.5 w-12 rounded-full bg-gray-300' />
       </button>
 
-      <h3 className='mb-5 text-2xl font-semibold'>Confirm Ride</h3>
-
-      <div className='rounded-lg bg-yellow-400 p-4'>
-        <h4 className='text-lg font-semibold'>Ride details</h4>
-        <p className='mt-1 text-sm'>Enter the four-digit OTP from the rider.</p>
+      <div className='mb-5'>
+        <p className='text-sm font-semibold uppercase tracking-wider text-green-600'>
+          Rider picked up
+        </p>
+        <h3 className='mt-1 text-2xl font-bold text-gray-900'>Confirm your ride</h3>
+        <p className='mt-1 text-sm text-gray-500'>
+          Ask the rider for the 4-digit OTP before starting.
+        </p>
       </div>
 
-      <form onSubmit={verifyOtp}>
+      <div className='overflow-hidden rounded-2xl border border-gray-200 bg-gray-50'>
+        <div className='flex gap-4 border-b border-gray-200 p-4'>
+          <span className='flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-100 text-lg text-green-700'>
+            <i className='ri-map-pin-user-fill' />
+          </span>
+          <div>
+            <p className='text-xs font-semibold uppercase tracking-wide text-gray-400'>
+              Pickup
+            </p>
+            <h4 className='font-semibold text-gray-900'>
+              {rideDetails?.pickup?.title}
+            </h4>
+            <p className='text-sm text-gray-500'>
+              {rideDetails?.pickup?.address}
+            </p>
+          </div>
+        </div>
+
+        <div className='flex gap-4 border-b border-gray-200 p-4'>
+          <span className='flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black text-lg text-white'>
+            <i className='ri-map-pin-2-fill' />
+          </span>
+          <div>
+            <p className='text-xs font-semibold uppercase tracking-wide text-gray-400'>
+              Destination
+            </p>
+            <h4 className='font-semibold text-gray-900'>
+              {rideDetails?.destination?.title}
+            </h4>
+            <p className='text-sm text-gray-500'>
+              {rideDetails?.destination?.address}
+            </p>
+          </div>
+        </div>
+
+        <div className='flex items-center justify-between p-4'>
+          <div className='flex items-center gap-4'>
+            <span className='flex h-10 w-10 items-center justify-center rounded-full bg-yellow-100 text-lg text-yellow-700'>
+              <i className='ri-cash-line' />
+            </span>
+            <div>
+              <p className='text-xs font-semibold uppercase tracking-wide text-gray-400'>
+                Payment
+              </p>
+              <p className='font-medium text-gray-700'>
+                {rideDetails?.paymentMethod}
+              </p>
+            </div>
+          </div>
+          <p className='text-xl font-bold text-gray-900'>
+            {rideDetails?.vehicle?.fare}
+          </p>
+        </div>
+      </div>
+
+      <form className='mt-5' onSubmit={verifyOtp} noValidate>
+        <label
+          htmlFor='ride-otp'
+          className='mb-2 block text-sm font-semibold text-gray-800'
+        >
+          Ride OTP
+        </label>
         <input
+          id='ride-otp'
           type='text'
           inputMode='numeric'
+          autoComplete='one-time-code'
           maxLength={4}
           value={enteredOtp}
-          onChange={(event) => {
-            setEnteredOtp(event.target.value.replace(/\D/g, '').slice(0, 4))
-            setVerificationStatus('')
-          }}
-          placeholder='Enter 4-digit OTP'
-          className='mt-5 w-full rounded-lg border border-gray-300 p-3 text-center text-xl tracking-widest outline-none focus:border-black'
-          aria-label='Ride OTP'
+          onChange={handleOtpChange}
+          placeholder='••••'
+          className={`w-full rounded-xl border-2 bg-white px-4 py-3 text-center text-2xl font-bold tracking-[0.6em] text-gray-900 outline-none transition placeholder:tracking-[0.6em] ${
+            hasError
+              ? 'border-red-400 focus:border-red-500'
+              : 'border-gray-200 focus:border-green-600'
+          }`}
+          aria-describedby={verificationStatus ? 'otp-status' : undefined}
+          aria-invalid={hasError}
+          autoFocus
         />
 
-        {verificationStatus === 'success' && (
-          <p className='mt-2 text-sm font-semibold text-green-600'>
-            OTP verified. Ride can now start.
-          </p>
-        )}
-        {verificationStatus === 'error' && (
-          <p className='mt-2 text-sm font-semibold text-red-600'>
-            Incorrect OTP. Ask the rider to check the number.
-          </p>
-        )}
-        {verificationStatus === 'missing' && (
-          <p className='mt-2 text-sm font-semibold text-red-600'>
-            No active ride OTP was found.
+        {verificationStatus && (
+          <p
+            id='otp-status'
+            role='status'
+            className={`mt-2 text-sm font-medium ${
+              hasError ? 'text-red-600' : 'text-green-600'
+            }`}
+          >
+            {statusMessages[verificationStatus]}
           </p>
         )}
 
         <button
           type='submit'
           disabled={enteredOtp.length !== 4 || verificationStatus === 'success'}
-          className='mt-5 w-full rounded-lg bg-green-600 p-3 font-semibold text-white disabled:cursor-not-allowed disabled:bg-gray-400'
+          className='mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-black px-4 py-3.5 font-semibold text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500'
         >
-          {verificationStatus === 'success' ? 'Ride Verified' : 'Confirm Ride'}
+          <span>
+            {verificationStatus === 'success' ? 'Ride verified' : 'Confirm and start'}
+          </span>
+          <i className='ri-arrow-right-line text-lg' />
         </button>
       </form>
 
       <button
         type='button'
         onClick={returnToRidePopup}
-        className='mt-2 w-full rounded-lg bg-gray-300 p-3 font-semibold text-gray-700'
+        className='mt-3 w-full rounded-xl px-4 py-3 font-semibold text-gray-600 transition hover:bg-gray-100'
       >
-        Go Back
+        Go back
       </button>
-    </div>
+    </section>
   )
 }
 

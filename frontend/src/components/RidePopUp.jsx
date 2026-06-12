@@ -17,7 +17,9 @@ const RidePopUp = (props) => {
                     <img className='h-12 w-12 -mr-2 rounded-full object-cover' src="https://images.ctfassets.net/vztl6s0hp3ro/730j3EU8CMGQShwD1iLV7F/6e1c84839ab12aa03958a33fea129ded/what-is-a-chief-people-officer-and-why-does-it-matter.webp" alt="" />
                     <h2 className='ml-3 text-lg font-medium'>{userFullName}</h2>
                 </div>
-                <h5 className='text-lg font-semibold'>2.2 KM</h5>
+                <h5 className='text-lg font-semibold'>
+                  {props.ride?.distance || '2.2 KM'}
+                </h5>
             </div>
             <div className='flex gap-2 justify-between flex-col items-center'>
                 <div className='w-full mt-5'>
@@ -38,8 +40,8 @@ const RidePopUp = (props) => {
                     <div className='flex items-center gap-5 p-3'>
                         <i className="ri-currency-line"></i>
                         <div>
-                            <h3 className='text-lg font-medium'>₹157.21 </h3>
-                            <p className='text-sm -mt-1 text-gray-600'>Cash Cash</p>
+                            <h3 className='text-lg font-medium'>Rs. {props.ride?.fare || '157.21'}</h3>
+                            <p className='text-sm -mt-1 text-gray-600'>Cash/Online</p>
                         </div>
                     </div>
                 </div>
